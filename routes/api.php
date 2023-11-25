@@ -8,7 +8,10 @@ use App\Http\Controllers\Category;
 use App\Http\Controllers\Manufacturer;
 use App\Http\Controllers\Product;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\Client;
+use App\Http\Controllers\SellController;
+use App\Http\Controllers\Recipe;
+use App\Http\Controllers\DoctorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,8 +31,12 @@ Route::post('add/medicine', [Medicine::class, 'add']);
 Route::post('add/product', [Product::class, 'add']);
 Route::post('add/order', [OrderController::class, 'add']);
 Route::post('add/sell', [SellController::class, 'add']);
+Route::post('add/recipe', [Recipe::class, 'add']);
+
 
 Route::get('get/medicines', [Medicine::class, 'get']);
 Route::get('get/categories', [Category::class, 'get']);
 Route::get('get/manufacturers', [Manufacturer::class, 'get']);
 Route::get('get/products/{id}', [Product::class, 'getByPharmacyId']);
+Route::get('get/discount', [Client::class, 'getDiscount']);
+Route::get('get/doctor', [DoctorController::class, 'get']);
