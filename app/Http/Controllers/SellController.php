@@ -35,4 +35,12 @@ class SellController extends Controller
             return $e->getMessage();
         }
     }
+    
+    function change(Request $request){
+
+    }
+
+    function delete(Request $request){
+
+    }
 }

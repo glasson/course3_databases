@@ -47,4 +47,19 @@ class OrderController extends Controller
     function getOrderById($id){
         return OrderedProduct::where('order', $id)->get();
     }
+
+    function change(Request $request){
+
+    }
+
+    function delete(Request $request){
+        $number = $request->input('order_number');
+        $record = ClientOrder::find($number);//Сейчас номер это айди, изменить на уникальный номер
+        if ($record) {
+            $record->delete();
+            return 'Запись успешно удалена';
+        } else {
+            return 'Запись не найдена';
+        }
+    }
 }

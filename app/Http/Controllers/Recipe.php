@@ -24,4 +24,12 @@ class Recipe extends Controller
             return $exception->getMessage();
         }
     }
+
+    function change(Request $request){
+
+    }
+
+    function delete(Request $request){
+
+    }
 }

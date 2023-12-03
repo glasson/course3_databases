@@ -7,7 +7,7 @@ use App\Models\Client as ClientModel;
 
 class Client extends Controller
 {
-    function getDiscount(Request $request){
+    function get(Request $request){
         return ClientModel::where('phone', $request->input('phone')) -> first() -> discount;
     }
 }
