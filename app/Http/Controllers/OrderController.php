@@ -28,12 +28,10 @@ class OrderController extends Controller
 
             $products = $request->input('products', []);
             foreach ($products as $product) {
-                $id = $product['id'];
-                $quantity = $product['quantity'];
                 $product_order = new OrderedProduct();
-                $product_order->product = $id;
-                $product_order->quantity = $quantity;
                 $product_order->order = $order->id ;
+                $product_order->product = $product['id'];
+                $product_order->quantity = $product['quantity'];
                 $product_order->save();
             }
 
@@ -44,11 +42,23 @@ class OrderController extends Controller
         }
     }
 
-    function getOrderById($id){
-        return OrderedProduct::where('order', $id)->get();
+    function find(Request $request){
+        return OrderedProduct::where('order', $request->input('id'))->get();
     }
 
     function change(Request $request){
+        $order_number= $request->input('order_number');
+        OrderedProduct::where('order', $order_number)->delete();
+
+        $products = $request->input('new_ordered_products', []);
+        foreach ($products as $product) {
+            $product_order = new OrderedProduct();
+            $product_order->order = $order_number;
+            $product_order->product = $product['id'];
+            $product_order->quantity = $product['quantity'];
+            $product_order->save();
+        }
+        return 'успешно';
 
     }
 

@@ -61,7 +61,8 @@ Route::post('delete/order', [OrderController::class, 'delete']);
 Route::post('delete/sell', [SellController::class, 'delete']);
 Route::post('delete/recipe', [Recipe::class, 'delete']);
 Route::post('delete/employee', [Employee::class, 'delete']);
-Route::post('delete/supply', [Supply::class, 'delete']);
+Route::post('delete/supply', [Supply::class, 'delete_supply']);
+Route::post('delete/supplied_product', [Supply::class, 'delete_supplied_product']);
 Route::post('delete/pharmacy', [Pharmacy::class, 'delete']);
 Route::post('delete/promotion', [Promotion::class, 'delete']);
 
@@ -74,13 +75,20 @@ Route::get('get/doctor', [DoctorController::class, 'get']);
 Route::get('get/role', [RoleController::class, 'get']);
 Route::get('get/supplier', [SupplierController::class, 'get']);
 Route::get('get/location', [LocationController::class, 'get']);
+Route::get('get/promotion', [Promotion::class, 'get']);
+
 
 Route::get('find/medicines', [Medicine::class, 'find']);
 Route::get('find/categories', [Category::class, 'find']);
 Route::get('find/manufacturers', [Manufacturer::class, 'find']);
 Route::get('find/discount', [Client::class, 'find']);
-Route::get('find/doctor', [DoctorController::class, 'find']);
+Route::get('find/doctors', [DoctorController::class, 'find']);
 Route::get('find/roles', [RoleController::class, 'find']);
 Route::get('find/supplier', [SupplierController::class, 'find']);
 Route::get('find/location', [LocationController::class, 'find']);
 Route::get('find/products', [Product::class, 'find']);
+Route::get('find/ordered_products', [OrderController::class, 'find']);
+Route::get('find/recipes', [Recipe::class, 'find']);
+Route::get('find/employee', [Employee::class, 'find']);
+Route::get('find/supply', [Supply::class, 'find']);
+Route::get('find/pharmacy', [Pharmacy::class, 'find']);

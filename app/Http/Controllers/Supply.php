@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SuppliedProduct;
 use App\Models\Supply as SupplyModel;
 use Exception;
+use Ramsey\Collection\Map\AssociativeArrayMap;
 
 class Supply extends Controller
 {
@@ -33,11 +34,28 @@ class Supply extends Controller
         }
     }
 
+    function find (Request $request){
+        $date = $request->input("date");
+        $pharmacy_id = $request->input("pharmacy_id");
+        $supplies = SupplyModel::where("supply_date", $date)->where('pharmacy', $pharmacy_id)->get();
+        $response=[];
+        foreach($supplies as $supply){
+            $suppliedProducts = SuppliedProduct::where('supply', $supply->id)->get();
+            array_push($response, ['supply'=>$supply, 'suppliedProducts'=>$suppliedProducts]);
+        }
+        return $response;
+    }
+
     function change(Request $request){
 
     }
 
-    function delete(Request $request){
-
+    function delete_supply(Request $request){
+        SupplyModel::destroy($request->input('id'));
+        return '200';
+    }
+    function delete_supplied_product(Request $request){
+        SuppliedProduct::destroy($request->input('id'));
+        return '200';
     }
 }
