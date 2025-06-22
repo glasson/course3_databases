@@ -15,7 +15,7 @@ class Recipe extends Controller
             $recipe->doctor= $request->input('doctor_id');
             $recipe->medicine= $request->input('medicine_id');
             $client = Client::where('phone', $request->input('phone'))->first();// изменить эту строку
-            $recipe->client = $client->id;
+            $recipe->client = 1;//$client->id
             $recipe->series= $request->input('series');
             $recipe->number= $request->input('number');
             $recipe->save();

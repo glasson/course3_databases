@@ -15,7 +15,7 @@ class Supply extends Controller
         try{
             $supply = new SupplyModel();
             $supply->supplier = $request->input('supplier');
-            $supply->supply_date = date('d.m.Y');
+            $supply->supply_date = $request->input('supply_date');//date('d.m.Y');
             $supply->pharmacy = $request->input('pharmacy_id');
             $supply->save();
             

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ClientOrder;
 use App\Models\OrderedProduct;
 use App\Models\Client;
+use App\Models\Product;
 use DateTime, DateTimeZone, Exception;
 
 class OrderController extends Controller
@@ -72,4 +73,30 @@ class OrderController extends Controller
             return 'Запись не найдена';
         }
     }
+
+    function client_order(Request $request){
+        $phone = $request->input('phone');
+
+        $order = new ClientOrder();
+        $client = Client::where('phone', $phone)->first();
+        $order->client = $client->id;
+            
+        $order->pharmacy_id = $request->input('pharmacy');
+
+        $currentDate = new DateTime();
+        $currentDate->setTimezone( new DateTimeZone('Asia/Bangkok') );    
+        $order->order_date = $currentDate->format('Y-m-d H:i:s');
+
+        $order->save();
+
+        $product_order = new OrderedProduct();
+        $product_order->order = $order->id ;
+        
+        $product_order->product = Product::where('name', $request->input('product'))->first()->id;
+        $product_order->quantity = $request->input('quantity');
+        $product_order->save();
+
+        return $order->id;
+    }
+
 }

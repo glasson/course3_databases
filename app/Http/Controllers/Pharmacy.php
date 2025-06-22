@@ -42,14 +42,44 @@ class Pharmacy extends Controller
         }
         return $pharmacies;
     }
+
+    function find_one_pharmacy (Request $request){
+        try{
+            $region =  $request->input('region');
+            $city = $request->input('city');
+            $street = $request->input('street');
+            $building = $request->input('building');
+            $region_record = Region::where('name', $region)->first();
+            $city_record = City::where('name', $city)->first();
+            $street_record = Street::where('name', $street)->first();
+            $ph = PharmacyModel::where('region', $region_record->id)->where('city', $city_record->id)
+                                    ->where('street', $street_record->id)->where('building_number',$building)->first();
+            if ($ph === null)
+                return 'не найдено';
+            else {
+                return $ph;
+            }
+        }
+        catch(Exception){
+            return 'не найдено';
+        }
+        
+    }
     
     function change(Request $request){
-        
+            $pharm = PharmacyModel::find($request->input('id'));
+            $pharm->city = $request->input('city');
+            $pharm->street = $request->input('street');
+            $pharm->region = $request->input('region');
+            $pharm->building_number = $request->input('building');
+            $pharm->schedule = $request->input('schedule');
+            $pharm->save();
+            return 200;
     }
 
     function delete(Request $request){
         PharmacyModel::destroy($request->input('id'));
-        return '200';
+        return $request;
     }
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,8 @@ use App\Http\Controllers\Supply;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Pharmacy;
 use App\Http\Controllers\Promotion;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +48,9 @@ Route::post('add/employee', [Employee::class, 'add']);
 Route::post('add/supply', [Supply::class, 'add']);
 Route::post('add/pharmacy', [Pharmacy::class, 'add']);
 Route::post('add/promotion', [Promotion::class, 'add']);
+Route::post('add/manufacturer', [Manufacturer::class, 'add']);
+Route::post('add/supplier', [SupplierController::class, 'add']);
+Route::post('add/category', [Category::class, 'add']);
 
 Route::post('change/medicine', [Medicine::class, 'change']);
 Route::post('change/product', [Product::class, 'change']);
@@ -65,17 +72,20 @@ Route::post('delete/supply', [Supply::class, 'delete_supply']);
 Route::post('delete/supplied_product', [Supply::class, 'delete_supplied_product']);
 Route::post('delete/pharmacy', [Pharmacy::class, 'delete']);
 Route::post('delete/promotion', [Promotion::class, 'delete']);
+Route::post('delete/expired_products', [Product::class, 'delete_expired']);
 
 Route::get('get/medicines', [Medicine::class, 'get']);
 Route::get('get/categories', [Category::class, 'get']);
 Route::get('get/manufacturers', [Manufacturer::class, 'get']);
 Route::get('get/products/{id}', [Product::class, 'getByPharmacyId']);
+Route::get('get/products', [Product::class, 'get_all']);
 Route::get('get/discount', [Client::class, 'get']);
 Route::get('get/doctor', [DoctorController::class, 'get']);
 Route::get('get/role', [RoleController::class, 'get']);
 Route::get('get/supplier', [SupplierController::class, 'get']);
 Route::get('get/location', [LocationController::class, 'get']);
 Route::get('get/promotion', [Promotion::class, 'get']);
+
 
 
 Route::get('find/medicines', [Medicine::class, 'find']);
@@ -92,3 +102,16 @@ Route::get('find/recipes', [Recipe::class, 'find']);
 Route::get('find/employee', [Employee::class, 'find']);
 Route::get('find/supply', [Supply::class, 'find']);
 Route::get('find/pharmacy', [Pharmacy::class, 'find']);
+Route::get('find/one_pharmacy', [Pharmacy::class, 'find_one_pharmacy']);
+
+
+Route::get('download/products_in_stock', [FileController::class, 'products_in_stock']);
+Route::get('download/promotions', [FileController::class, 'promotions']);
+Route::get('download/expired_products', [FileController::class, 'expired_products']);
+Route::get('download/purchases_history', [FileController::class, 'purchases_history']);
+
+Route::get('check_stock_product', [Product::class, 'check_stock_product']);
+Route::get('client/order', [OrderController::class, 'client_order']);
+
+Route::post('registration', [RegistrationController::class, 'register']);
+Route::post('login', [AuthController::class, 'auth']);

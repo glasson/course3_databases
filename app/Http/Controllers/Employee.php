@@ -20,7 +20,7 @@ class Employee extends Controller
             $employee->password = $request->input('password');
             $employee->work_experience = $request->input('work_experience');
             $employee->save();
-            return 'успешно';
+            //return 'успешно';
         }
         catch(Exception $exception){
             return $exception->getMessage();
@@ -32,8 +32,12 @@ class Employee extends Controller
         $surname = $request->input('surname');
         $patronymic = $request->input('patronymic');
         $pharmacy_id = $request->input('pharmacy_id');
-        return EmployeeModel::where('name',$name)->where('surname',$surname)->
-                                where('patronymic',$patronymic)->where('apteka', $pharmacy_id)->get();
+        if ($request->input('account_role') === 'admin')
+            return EmployeeModel::where('name',$name)->where('surname',$surname)->where('patronymic',$patronymic)->get();
+        else{
+            return EmployeeModel::where('name',$name)->where('surname',$surname)->where('patronymic',$patronymic)->
+                                    where('apteka', $pharmacy_id)->get(); 
+        }
     }
 
     function change(Request $request){

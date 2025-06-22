@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sell;
 use App\Models\SoldProduct;
 use App\Models\Client as ClientModel;
-use DateTime;
+use DateTime, DateTimeZone;
 use Exception;
 
 class SellController extends Controller
@@ -17,7 +17,9 @@ class SellController extends Controller
             $sell->pharmacist = $request->input('account_id');
             if ($request->has('phone')) 
                 $sell->client = ClientModel::where('phone', $request->input('phone'))->first()->id;
-            $sell->date = new DateTime();
+            $currentDate = new DateTime();
+            $currentDate->setTimezone( new DateTimeZone('Asia/Bangkok') );   
+            $sell->date = $currentDate;
             $sell->save();
 
             $products = $request->input('products', []);
